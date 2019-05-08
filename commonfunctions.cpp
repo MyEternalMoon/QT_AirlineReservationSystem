@@ -47,3 +47,8 @@ bool isDirExistsAndCreateDir(QString dir)
         Dir.mkdir(Dir.absolutePath());
     return true;
 }
+
+bool bookTicket(QString userId, QString airlineId)
+{
+    //Do something with database.
+}

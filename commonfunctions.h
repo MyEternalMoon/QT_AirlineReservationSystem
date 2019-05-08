@@ -8,6 +8,7 @@
 
 bool copyFileToPath(QString, QString, bool);
 bool isDirExistsAndCreateDir(QString);
+bool bookTicket(QString userId, QString airlineId);
 QPixmap radiusPix(QString url, int size);
 
 #endif // COMMONFUNCTIONS_H
