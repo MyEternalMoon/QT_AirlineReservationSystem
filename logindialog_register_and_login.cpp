@@ -1,6 +1,7 @@
 #include "ui_logindialog.h"
 #include "logindialog.h"
 #include <QFileDialog>
+#include <QImage>
 
 
 int LogInDialog::checkPassword()
@@ -131,7 +132,10 @@ void LogInDialog::selectHead()
 
         isDirExistsAndCreateDir("./head");
         //把头像复制到文件夹中储存，这里可能有毛病，会覆盖同名
-        copyFileToPath(fileNames.at(0),dstUrl,0);
+        QImage im;
+        im.load(fileNames.at(0),"jpg");
+        im.save(dstUrl,"png");
+       // copyFileToPath(fileNames.at(0),dstUrl,0);
         _headUrl = dstUrl.toStdString();
 
         QPixmap pixmap = radiusPix(dstUrl,100);

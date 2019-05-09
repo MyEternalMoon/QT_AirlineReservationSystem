@@ -55,6 +55,7 @@ private slots:
     void ticketClicked(QListWidgetItem *i);
     void ticketRejected();
     void bookTicketClicked();
+    void headClicked();
 
 protected:
     void mousePressEvent(QMouseEvent* event);

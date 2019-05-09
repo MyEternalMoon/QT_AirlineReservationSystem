@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QFile>
 
-bool copyFileToPath(QString, QString, bool);
+//bool copyFileToPath(QString, QString, bool);
 bool isDirExistsAndCreateDir(QString);
 bool bookTicket(QString userId, QString airlineId);
 QPixmap radiusPix(QString url, int size);

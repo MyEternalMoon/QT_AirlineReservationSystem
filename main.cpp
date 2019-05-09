@@ -5,7 +5,6 @@
 #include <QApplication>
 #include <iostream>
 
-
 using std::ofstream;
 
 int main(int argc, char *argv[])

@@ -1,29 +1,29 @@
 #include "commonfunctions.h"
 
-bool copyFileToPath(QString sourceDir ,QString toDir, bool coverFileIfExist)
-{
-    toDir.replace("\\","/");
-    if (sourceDir == toDir){
-        return true;
-    }
-    if (!QFile::exists(sourceDir)){
-        return false;
-    }
-    QDir *createfile = new QDir;
-    bool exist = createfile->exists(toDir);
-    if (exist){
-        if(coverFileIfExist){
-            createfile->remove(toDir);
-        }
-    }//end if
-    delete createfile;
-    if(!QFile::copy(sourceDir, toDir))
-    {
-        return false;
-    }
+//bool copyFileToPath(QString sourceDir ,QString toDir, bool coverFileIfExist)
+//{
+//    toDir.replace("\\","/");
+//    if (sourceDir == toDir){
+//        return true;
+//    }
+//    if (!QFile::exists(sourceDir)){
+//        return false;
+//    }
+//    QDir *createfile = new QDir;
+//    bool exist = createfile->exists(toDir);
+//    if (exist){
+//        if(coverFileIfExist){
+//            createfile->remove(toDir);
+//        }
+//    }//end if
+//    delete createfile;
+//    if(!QFile::copy(sourceDir, toDir))
+//    {
+//        return false;
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
 QPixmap radiusPix(QString url, int size)
 {

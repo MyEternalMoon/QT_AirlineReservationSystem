@@ -43,7 +43,8 @@ void MainWindow:: initSignalsAndSlots()
     connect(ui->minimumButton,SIGNAL(clicked(bool)),this,SLOT(showMinimized()));
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
     connect(ui->bookTicketrejectBtn,SIGNAL(clicked(bool)),this,SLOT(ticketRejected()));
-    connect(ui->bookTicketAcceptbtn,SIGNAL(clicked(bool)),this,SLOT(bookTicketClicked());
+    connect(ui->bookTicketAcceptbtn,SIGNAL(clicked(bool)),this,SLOT(bookTicketClicked()));
+    connect(ui->headButton,SIGNAL(clicked(bool)),this,SLOT(headClicked());
 }
 
 void MainWindow::initInfomation()
@@ -103,7 +104,7 @@ void MainWindow::createARow(QString fromCity, QString toCity, QTime fromTime, QT
 void MainWindow::bookTicketClicked()
 {
     QListWidgetItem* cur = ui->listWidget->currentItem();
-    QString currentID = ui->listWidget->itemWidget(cur)->findChild<QLabel>("idLabel")->text();
+    QString currentID = ui->listWidget->itemWidget(cur)->findChild<QLabel*>("idLabel")->text();
     if (bookTicket(currentID, _name))
     {
         // Do something such as turn to view of purchased tickets/
@@ -154,11 +155,14 @@ void MainWindow::clearAirlinesWidget()
     }
 }
 
+void MainWindow::headClicked()
+{
+
+}
+
 MainWindow::~MainWindow()
 {
     clearAirlinesWidget();
     delete ui;
 }
-
-
 

@@ -241,9 +241,6 @@ background:rgb(248,248,248)</string>
       <enum>Qt::ElideMiddle</enum>
      </property>
     </widget>
-    <zorder>choiceListWidget</zorder>
-    <zorder>listWidget</zorder>
-    <zorder>bookTicketWidget</zorder>
    </widget>
    <widget class="QLabel" name="userInfoLabel">
     <property name="geometry">
@@ -462,6 +459,28 @@ QPushButton#bookTicketrejectBtn:pressed{background-color:#c2ccd0}</string>
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="headButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>15</y>
+      <width>45</width>
+      <height>45</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>bglabel</zorder>
    <zorder>exitButton</zorder>
    <zorder>minimumButton</zorder>
@@ -475,6 +494,7 @@ QPushButton#bookTicketrejectBtn:pressed{background-color:#c2ccd0}</string>
    <zorder>line</zorder>
    <zorder>line_3</zorder>
    <zorder>line_2</zorder>
+   <zorder>headButton</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
