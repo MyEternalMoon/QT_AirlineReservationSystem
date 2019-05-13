@@ -50,5 +50,6 @@ bool isDirExistsAndCreateDir(QString dir)
 
 bool bookTicket(QString userId, QString airlineId)
 {
+
     //Do something with database.
 }

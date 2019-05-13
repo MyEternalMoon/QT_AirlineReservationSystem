@@ -10,11 +10,12 @@
 #include <QPropertyAnimation>
 #include <QDateTime>
 #include <QListWidgetItem>
+#include "buyticketdialog.h"
 #include "commonfunctions.h"
 #include "airlinewidget.h"
 #include "airlines.h"
 #include "airlines.h"
-
+#include <QFileDialog>
 namespace Ui {
 class MainWindow;
 }
@@ -32,7 +33,7 @@ private:
     QString _name; // User's name
     QString _url; // url of head
     QSqlDatabase _db;
-    int _arth; // User's arthority. 0->Manager, 1->Client
+    int _arth; // User's arthority. 1->Manager, 0->Client
 
     airlines _airlines[100];
     int _amount; //smaller than 100
@@ -47,6 +48,7 @@ private:
     void initAirlines();
     void createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id);
     void clearAirlinesWidget();
+    void ordersMode();
 
     Ui::MainWindow *ui;
 //protected slots:

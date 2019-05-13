@@ -30,6 +30,18 @@ QString airlineWidget::getID()
     return ui->idLabel->text();
 }
 
+void airlineWidget::hideOrShowEditButton(bool isToShow)
+{
+    if (isToShow)
+    {
+        ui->editButton->show();
+    }
+    else
+    {
+        ui->editButton->hide();
+    }
+}
+
 airlineWidget::~airlineWidget()
 {
     delete ui;

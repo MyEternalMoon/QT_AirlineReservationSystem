@@ -102,7 +102,7 @@
   <widget class="QLabel" name="priceLabel">
    <property name="geometry">
     <rect>
-     <x>690</x>
+     <x>620</x>
      <y>15</y>
      <width>110</width>
      <height>50</height>
@@ -143,7 +143,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>600</x>
      <y>35</y>
      <width>20</width>
      <height>30</height>
@@ -173,6 +173,25 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-image: url(:/img_ico/right.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="editButton">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>15</y>
+     <width>70</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/img_normal/edit_button.png);</string>
    </property>
    <property name="text">
     <string/>

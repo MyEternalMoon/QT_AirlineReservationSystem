@@ -9,6 +9,7 @@ LogInDialog::LogInDialog(QWidget *parent) :
     ui->setupUi(this);
     _clickedFlag = 0;
     _mode = 0;
+    _arth = 1;
     _headUrl = "./head/no_head.png";
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -39,7 +40,7 @@ void LogInDialog::checkLogIn()
         if (registerUsers(user, pass))
         {
             if (!ui->managerCheckBox->isChecked())
-                _arth = 0;
+                _arth = 1;
             MainWindow* w = new MainWindow(NULL,user.toStdString(),_headUrl,_arth);
             w->show();
             this->hide();
@@ -61,8 +62,8 @@ void LogInDialog::checkLogIn()
     {
         if (checkPassword())
         {
-            if (!ui->managerCheckBox->isChecked())
-                _arth = 0;
+            if (ui->managerCheckBox->isChecked())
+                _arth = 1;
             MainWindow* w = new MainWindow(NULL,user.toStdString(),_headUrl,_arth);
             w->show();
             this->hide();

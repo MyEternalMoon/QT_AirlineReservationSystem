@@ -15,7 +15,7 @@ class airlineWidget : public QWidget
 public:
     explicit airlineWidget(QWidget *parent = 0);
     airlineWidget(QWidget* parent,QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id);
-
+    void hideOrShowEditButton(bool isToShow);
     QString getID();
     int getPrice();
     ~airlineWidget();

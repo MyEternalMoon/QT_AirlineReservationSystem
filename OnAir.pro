@@ -33,21 +33,23 @@ SOURCES += \
     mainwindow_noncustom.cpp \
     logindialog_register_and_login.cpp \
     commonfunctions.cpp \
-    airlinewidget.cpp
+    airlinewidget.cpp \
+    buyticketdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     logindialog.h \
     airlines.h \
     commonfunctions.h \
-    airlinewidget.h
+    airlinewidget.h \
+    buyticketdialog.h
 
 
 FORMS += \
         mainwindow.ui \
     logindialog.ui \
-    airlineinfowidget.ui \
-    airlinewidget.ui
+    airlinewidget.ui \
+    buyticketdialog.ui
 
 RESOURCES += \
     Resources/buttons.qrc
