@@ -16,11 +16,19 @@ public:
     explicit airlineWidget(QWidget *parent = 0);
     airlineWidget(QWidget* parent,QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id);
     void hideOrShowEditButton(bool isToShow);
+
     QString getID();
     int getPrice();
     ~airlineWidget();
 
+private slots:
+    void editAirlines();
+signals:
+    airlineEidted(QList<QString> sql); // airport start, end ,price ,id;
+
+
 private:
+    bool isEditing;
     Ui::airlineWidget *ui;
 };
 

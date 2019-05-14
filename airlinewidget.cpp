@@ -15,7 +15,7 @@ airlineWidget::airlineWidget(QWidget *parent, QString fromCity, QString toCity, 
 
     ui->setupUi(this);
     ui->fromCityLabel->setText(fromCity);
-
+    isEditing = false;
     ui->toCityLabel->setText(toCity);
 
     ui->priceLabel->setText(QString::number(price));
@@ -23,6 +23,7 @@ airlineWidget::airlineWidget(QWidget *parent, QString fromCity, QString toCity, 
 
     ui->fromTimeLabel->setText(fromTime.toString("hh:mm"));
     ui->toTimeLabel->setText(toTime.toString("hh:mm"));
+    connect(ui->editButton,SIGNAL(clicked(bool)),this,SLOT(editAirlines()));
 }
 
 QString airlineWidget::getID()
@@ -39,7 +40,33 @@ void airlineWidget::hideOrShowEditButton(bool isToShow)
     else
     {
         ui->editButton->hide();
+
     }
+}
+
+void airlineWidget::editAirlines()
+{
+    if (!isEditing)
+    {
+        isEditing = true;
+        ui->editButton->setStyleSheet("border-image: url(:/img_normal/ok.png);");
+    }
+    else
+    {
+        isEditing = false;
+        //check if valid
+        ui->editButton->setStyleSheet("border-image: url(:/img_normal/edit_button.png);");
+        QList<QString> values;
+        values.append(ui->fromCityLabel->text());
+        values.append(ui->toCityLabel->text());
+        values.append(ui->priceLabel->text());
+        values.append(ui->idLabel->text());
+        emit airlineEidted(values);
+    }
+    ui->fromCityLabel->setReadOnly(!isEditing);
+    ui->toCityLabel->setReadOnly(!isEditing);
+    ui->priceLabel->setReadOnly(!isEditing);
+    ui->fromCityLabel->setFocus();
 }
 
 airlineWidget::~airlineWidget()
