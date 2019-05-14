@@ -34,6 +34,7 @@ private:
     QString _url; // url of head
     QSqlDatabase _db;
     int _arth; // User's arthority. 1->Manager, 0->Client
+    int _mode; // 0->buy tickets, 1->already bought, 2->edit(for djc)
 
     airlines _airlines[100];
     int _amount; //smaller than 100
@@ -45,8 +46,8 @@ private:
     void initSignalsAndSlots();
     void initInfomation();
 
-    void initAirlines();
-    void createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id);
+    void initAirlines(bool editable);
+    void createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id, bool editable);
     void clearAirlinesWidget();
     void ordersMode();
 
@@ -58,11 +59,14 @@ private slots:
     void ticketRejected();
     void bookTicketClicked();
     void headClicked();
+    bool airlineEidted(QList<QString> values);
+    void switchMode(int);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
+    void changeBackgroundStyle(bool isEditing);
 
 };
 

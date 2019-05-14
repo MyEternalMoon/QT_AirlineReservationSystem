@@ -35,3 +35,24 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     _clickedFlag = 0;
     this->setCursor(Qt::ArrowCursor);
 }
+
+void MainWindow::changeBackgroundStyle(bool isEditing)
+{
+    if (isEditing)
+    {
+        ui->bglabel->setStyleSheet("border-image: url(:/img_background/mainbackground_manager.png);");
+        ui->line->setStyleSheet("background-color:#f20c00");
+        ui->line_2->setStyleSheet("background-color:#f20c00");
+        ui->line_3->setStyleSheet("background-color:#f20c00");
+        ui->warningLabel->show();
+    }
+
+    else
+    {
+        ui->bglabel->setStyleSheet("border-image: url(:/img_background/mainbackground.png);");
+        ui->line->setStyleSheet("background:#2ca9e1");
+        ui->line_2->setStyleSheet("background:#2ca9e1");
+        ui->line_3->setStyleSheet("background:#2ca9e1");
+        ui->warningLabel->hide();
+    }
+}

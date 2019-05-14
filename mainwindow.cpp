@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent, string name, std::string url, int arth) 
 
     _name = QString(name.c_str());
     _arth = arth;
+    _mode = 0;
     _clickedFlag = 0;
     _url = QString(url.c_str());
 
@@ -31,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent, string name, std::string url, int arth) 
     }
     _db.setDatabaseName("./qtdb.db");
     //initialize database connection.
-
-    initAirlines();
+    ui->warningLabel->hide();
+    initAirlines(false);
     initInfomation();
 }
 
@@ -45,13 +46,14 @@ void MainWindow:: initSignalsAndSlots()
     connect(ui->bookTicketrejectBtn,SIGNAL(clicked(bool)),this,SLOT(ticketRejected()));
     connect(ui->bookTicketAcceptbtn,SIGNAL(clicked(bool)),this,SLOT(bookTicketClicked()));
     connect(ui->headButton,SIGNAL(clicked(bool)),this,SLOT(headClicked()));
+    connect(ui->modeWidget,SIGNAL(currentRowChanged(int)),this,SLOT(switchMode(int)));
 }
 
 void MainWindow::initInfomation()
 {
     QString info;
     //显示用户信息
-    if (_arth == 0)
+    if (_arth == 1)
     {
         info = QString::asprintf("Dear Manager");
     }
@@ -61,14 +63,18 @@ void MainWindow::initInfomation()
     }
     ui->userInfoLabel->setText(_name);
     ui->arthorLabel->setText(info);
-
+//      选择模式
+    if (!_arth)
+    {
+        ui->modeWidget->takeItem(2);
+    }
 //    显示头像
     QPixmap pix = radiusPix(_url, ui->haedLabel->width());
     ui->haedLabel->setPixmap(pix);
 
 }
 
-void MainWindow::initAirlines()
+void MainWindow::initAirlines(bool editable)
 {
     if (_db.open())
     {
@@ -83,24 +89,22 @@ void MainWindow::initAirlines()
 //                                                   sq.value(3).toDateTime().time() <<sq.value(4).toDateTime().time()
 //                                                  << sq.value(5).toInt() <<sq.value(2).toString();
                 createARow(sq.value(0).toString(), sq.value(1).toString(),
-                           sq.value(3).toDateTime().time(),sq.value(4).toDateTime().time(),
-                           sq.value(5).toInt(),sq.value(2).toString());
+                           sq.value(4).toTime(),sq.value(6).toTime(),
+                           sq.value(7).toInt(),sq.value(2).toString(),editable);
             }
         }
     }
 }
 
-void MainWindow::createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id)
+void MainWindow::createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id, bool editable)
 {
     QListWidgetItem* item = new QListWidgetItem;
     airlineWidget* info = new airlineWidget(this,fromCity,toCity,fromTime,toTime,price,id);
     item->setSizeHint(QSize(820,80));
-    if (_arth)
-        info->hideOrShowEditButton(false);
-    else
-        info->hideOrShowEditButton(true);
+    info->hideOrShowEditButton(editable);
 
     ui->listWidget->addItem(item);
+    connect(info,SIGNAL(airlineEidted(QList<QString>)),this,SLOT(airlineEidted(QList<QString>)));
     ui->listWidget->setItemWidget(item,info);
 
 }
@@ -109,11 +113,11 @@ void MainWindow::bookTicketClicked()
 {
     // Dialog shown to know if is sure to buy ticket
     QWidget* id = ui->listWidget->itemWidget(ui->listWidget->currentItem());
-    QString currentID = id->findChild<QLabel*>("idLabel")->text();
-    QString fromTime = id->findChild<QLabel*>("fromTimeLabel")->text();
-    QString fromCity = id->findChild<QLabel*>("fromCityLabel")->text();
-    QString toCity = id->findChild<QLabel*>("toCityLabel")->text();
-    QString price = id->findChild<QLabel*>("priceLabel")->text();
+    QString currentID = id->findChild<QLineEdit*>("idLabel")->text();
+    QString fromTime = id->findChild<QLineEdit*>("fromTimeLabel")->text();
+    QString fromCity = id->findChild<QLineEdit*>("fromCityLabel")->text();
+    QString toCity = id->findChild<QLineEdit*>("toCityLabel")->text();
+    QString price = id->findChild<QLineEdit*>("priceLabel")->text();
 
     buyTicketDialog confirm(NULL,_name,currentID,fromCity,toCity,fromTime,price);
     if (confirm.exec())
@@ -132,6 +136,8 @@ void MainWindow::bookTicketClicked()
                 qDebug() << "SQL error";
             _db.commit();
             _db.close();
+
+            switchMode(1);
         }
     }
 
@@ -142,7 +148,7 @@ void MainWindow::ticketClicked(QListWidgetItem* i)
     //BookTicketWidget slides up
 
     QWidget* id = ui->listWidget->itemWidget(i);
-    QString currentID = id->findChild<QLabel*>("idLabel")->text();
+    QString currentID = id->findChild<QLineEdit*>("idLabel")->text();
     //get airlinewidget by listItem
     //use findChild<>(QString Objname) to find idLabel and get id.
 
@@ -161,18 +167,23 @@ void MainWindow::ticketClicked(QListWidgetItem* i)
 void MainWindow::ticketRejected()
 {
     //BookTicketWidget slides down
-    QPropertyAnimation* qp= new QPropertyAnimation(ui->bookTicketWidget,"geometry");
-    qp->setDuration(300);
-    qp->setStartValue(QRect(80,530,820,120));
-    qp->setEndValue(QRect(80,650,820,120));
-    qp->start(QAbstractAnimation::DeleteWhenStopped);
+    if (ui->bookTicketWidget->y() <650)
+    {
+        QPropertyAnimation* qp= new QPropertyAnimation(ui->bookTicketWidget,"geometry");
+        qp->setDuration(300);
+        qp->setStartValue(QRect(80,530,820,120));
+        qp->setEndValue(QRect(80,650,820,120));
+        qp->start(QAbstractAnimation::DeleteWhenStopped);
+    }
 }
 
 void MainWindow::clearAirlinesWidget()
 {
     // release all memories of listwidgetItems
-    for (int i = 0;i<ui->listWidget->count();i++)
+    int cnt = ui->listWidget->count();
+    for (int i = 0;i<cnt;i++)
     {
+      //  qDebug () << ui->listWidget->count();
         QListWidgetItem* item = ui->listWidget->takeItem(0);
         QWidget* air = ui->listWidget->itemWidget(item);
 
@@ -236,9 +247,60 @@ void MainWindow::headClicked()
     }
 }
 
-void MainWindow::ordersMode()
+bool MainWindow::airlineEidted(QList<QString> values)
 {
+    QSqlQuery sq(_db);
+    QString userSql = "UPDATE airlines SET airport_start = ?"
+                      ", airport_arrival = ?, price = ? WHERE airline_id = ?";
+    sq.prepare(userSql);
+    for (int i =0;i<values.length();i++)
+    {
+        if (i == values.length()-2) // price
+            sq.addBindValue(values.at(i).toInt());
+        else
+            sq.addBindValue(values.at(i));
+    }
+    if (!sq.exec())
+    {
+        qDebug() << "SQLError";
+    }
+    _db.commit();
+    _db.close();
 
+    switchMode(0);
+    return true;
+}
+
+void MainWindow::switchMode(int mode)
+{
+    if (mode == _mode)
+    {
+        return;
+    }
+    else
+        _mode = mode;
+    if (mode == 0)
+    {
+        changeBackgroundStyle(false);
+        clearAirlinesWidget();
+        initAirlines(false);
+        connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
+    }
+    else if (mode == 2)
+    {
+        changeBackgroundStyle(true);
+        clearAirlinesWidget();
+        ticketRejected();
+        disconnect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
+        initAirlines(_arth?true:false);
+    }
+    else if (mode == 1)
+    {
+        //initOrders();
+        // if manager switches to this mode ,set new QSS to get a new background-image created by AI
+        // red-based color with 'Manager'I think fine!
+        qDebug() <<"mode1";
+    }
 }
 
 MainWindow::~MainWindow()

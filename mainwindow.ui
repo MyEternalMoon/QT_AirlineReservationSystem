@@ -106,7 +106,7 @@ background:transparent</string>
     <property name="styleSheet">
      <string notr="true">border:1px solid rgba(200,200,200,150);
 border-radius:3px;
-background:#2889d1;
+background:transparent;
 color:white</string>
     </property>
    </widget>
@@ -136,7 +136,7 @@ background:transparent</string>
       <height>575</height>
      </rect>
     </property>
-    <widget class="QListWidget" name="choiceListWidget">
+    <widget class="QListWidget" name="modeWidget">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -481,9 +481,36 @@ QPushButton#bookTicketrejectBtn:pressed{background-color:#c2ccd0}</string>
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="warningLabel">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>15</y>
+      <width>280</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线 Light</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border:none;
+background:transparent
+</string>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'等线 Light'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt; color:#ffffff;&quot;&gt;亲爱的管理员请注意！&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt; color:#ffffff;&quot;&gt;你的所有改动都会在数据库生效！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <zorder>bglabel</zorder>
-   <zorder>exitButton</zorder>
-   <zorder>minimumButton</zorder>
    <zorder>haedLabel</zorder>
    <zorder>lineEdit</zorder>
    <zorder>searchButton</zorder>
@@ -495,6 +522,9 @@ QPushButton#bookTicketrejectBtn:pressed{background-color:#c2ccd0}</string>
    <zorder>line_3</zorder>
    <zorder>line_2</zorder>
    <zorder>headButton</zorder>
+   <zorder>warningLabel</zorder>
+   <zorder>minimumButton</zorder>
+   <zorder>exitButton</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
