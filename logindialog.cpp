@@ -40,7 +40,7 @@ void LogInDialog::checkLogIn()
         if (registerUsers(user, pass))
         {
             if (!ui->managerCheckBox->isChecked())
-                _arth = 1;
+                _arth = 0;
             MainWindow* w = new MainWindow(NULL,user.toStdString(),_headUrl,_arth);
             w->show();
             this->hide();
@@ -62,8 +62,8 @@ void LogInDialog::checkLogIn()
     {
         if (checkPassword())
         {
-            if (ui->managerCheckBox->isChecked())
-                _arth = 1;
+            if (!ui->managerCheckBox->isChecked())
+                _arth = 0;
             MainWindow* w = new MainWindow(NULL,user.toStdString(),_headUrl,_arth);
             w->show();
             this->hide();
