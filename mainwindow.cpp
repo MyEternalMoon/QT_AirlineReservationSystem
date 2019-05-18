@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent, string name, std::string url, int arth) 
     //initialize database connection.
     ui->warningLabel->hide();
     initAirlines(false);
+
+
     initInfomation();
 }
 
@@ -120,6 +122,7 @@ void MainWindow::bookTicketClicked()
     QString price = id->findChild<QLineEdit*>("priceLabel")->text();
 
     buyTicketDialog confirm(NULL,_name,currentID,fromCity,toCity,fromTime,price);
+    ui->shadowWidget->setGeometry(0,0,this->width(),this->height());
     if (confirm.exec())
     {
         if (_db.open())
@@ -143,6 +146,7 @@ void MainWindow::bookTicketClicked()
             switchMode(1);
         }
     }
+    ui->shadowWidget->setGeometry(0,0,1,1);
 
 }
 
@@ -193,6 +197,12 @@ void MainWindow::clearAirlinesWidget()
         delete item;
         delete air;
     }
+}
+
+void MainWindow::searchAirlineClicked()
+{
+    QString txt = ui->lineEdit->text();
+
 }
 
 void MainWindow::headClicked()

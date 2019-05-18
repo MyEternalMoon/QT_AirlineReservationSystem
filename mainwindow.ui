@@ -510,6 +510,19 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt; color:#ffffff;&quot;&gt;你的所有改动都会在数据库生效！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QWidget" name="shadowWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget{background-color:rgba(0,0,0,0.6);}</string>
+    </property>
+   </widget>
    <zorder>bglabel</zorder>
    <zorder>haedLabel</zorder>
    <zorder>lineEdit</zorder>
@@ -525,6 +538,7 @@ p, li { white-space: pre-wrap; }
    <zorder>warningLabel</zorder>
    <zorder>minimumButton</zorder>
    <zorder>exitButton</zorder>
+   <zorder>shadowWidget</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
