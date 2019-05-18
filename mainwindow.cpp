@@ -127,16 +127,19 @@ void MainWindow::bookTicketClicked()
             QString currentUser = _name;
 
             QSqlQuery sq(_db);
-            QString userQuery = "INSERT INTO U_A values(?, ?)";
+            QString userQuery = "INSERT INTO U_A values(?, ?, ?, ?)";
             sq.prepare(userQuery);
             sq.addBindValue(currentID);
             sq.addBindValue(currentUser);
+            sq.addBindValue(price);
+            sq.addBindValue(QDate::currentDate());
 
             if (!sq.exec())
                 qDebug() << "SQL error";
             _db.commit();
             _db.close();
 
+            ui->listWidget->setCurrentRow(1);
             switchMode(1);
         }
     }
@@ -266,7 +269,7 @@ bool MainWindow::airlineEidted(QList<QString> values)
     }
     _db.commit();
     _db.close();
-
+    ui->listWidget->setCurrentRow(0);
     switchMode(0);
     return true;
 }

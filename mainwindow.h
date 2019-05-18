@@ -60,6 +60,7 @@ private slots:
     void bookTicketClicked();
     void headClicked();
     bool airlineEidted(QList<QString> values);
+    void searchAirlineClicked();
     void switchMode(int);
 
 protected:

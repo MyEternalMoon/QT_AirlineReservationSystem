@@ -34,7 +34,8 @@ SOURCES += \
     logindialog_register_and_login.cpp \
     commonfunctions.cpp \
     airlinewidget.cpp \
-    buyticketdialog.cpp
+    buyticketdialog.cpp \
+    orderwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,14 +43,16 @@ HEADERS += \
     airlines.h \
     commonfunctions.h \
     airlinewidget.h \
-    buyticketdialog.h
+    buyticketdialog.h \
+    orderwidget.h
 
 
 FORMS += \
         mainwindow.ui \
     logindialog.ui \
     airlinewidget.ui \
-    buyticketdialog.ui
+    buyticketdialog.ui \
+    orderwidget.ui
 
 RESOURCES += \
     Resources/buttons.qrc
