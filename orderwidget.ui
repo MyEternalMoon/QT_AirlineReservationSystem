@@ -13,31 +13,178 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="userLabel">
+  <property name="styleSheet">
+   <string notr="true">background:transparent</string>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>72</width>
-     <height>15</height>
+     <x>0</x>
+     <y>0</y>
+     <width>820</width>
+     <height>80</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>30</y>
-     <width>72</width>
-     <height>15</height>
-    </rect>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
+   <widget class="QPushButton" name="deleteOrderButton">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>45</y>
+      <width>90</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑 Light</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#deleteOrderButton{border-radius:4px;
+background-color:/*#44cef6;*/
+#2ca9e1;
+color:#ffffff}
+QPushButton#deleteOrderButton:hover{background-color:#44cef6;}
+QPushButton#deleteOrderButton:pressed{background-color:#007bbb}</string>
+    </property>
+    <property name="text">
+     <string>删除订单</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="goToAirlineButton">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>10</y>
+      <width>90</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑 Light</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#goToAirlineButton{border-radius:4px;
+background-color:/*#44cef6;*/
+#2ca9e1;
+color:#ffffff}
+QPushButton#goToAirlineButton:hover{background-color:#44cef6;}
+QPushButton#goToAirButton:pressed{background-color:#007bbb}</string>
+    </property>
+    <property name="text">
+     <string>查看航班</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="priceLabel">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>40</y>
+      <width>200</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>订单金额：4000.00</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dateLabel">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>250</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线 Light</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:#808080;
+border:none</string>
+    </property>
+    <property name="text">
+     <string>订单日期：2019-04-06</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="airlineLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>250</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>航班号：南航322</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>39</y>
+      <width>820</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#c2ccd0;</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="userLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>250</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:#808080;
+border:none</string>
+    </property>
+    <property name="text">
+     <string>用户名：</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -8,7 +8,7 @@ airlineWidget::airlineWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-airlineWidget::airlineWidget(QWidget *parent, QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id):
+airlineWidget::airlineWidget(QWidget *parent, QString fromCity, QString toCity,QDate fromDate, QDate toDate, QTime fromTime, QTime toTime, int price, QString id):
     QWidget(parent),
     ui(new Ui::airlineWidget)
 {
@@ -20,6 +20,10 @@ airlineWidget::airlineWidget(QWidget *parent, QString fromCity, QString toCity, 
 
     ui->priceLabel->setText(QString::number(price));
     ui->idLabel->setText(id);
+
+    ui->fromDateLabel->setText(fromDate.toString("yy-MM-dd"));
+    ui->toDateLabel->setText(toDate.toString("yy-MM-dd"));
+
 
     ui->fromTimeLabel->setText(fromTime.toString("hh:mm"));
     ui->toTimeLabel->setText(toTime.toString("hh:mm"));
@@ -63,10 +67,11 @@ void airlineWidget::editAirlines()
         values.append(ui->idLabel->text());
         emit airlineEidted(values);
     }
-    ui->fromCityLabel->setReadOnly(!isEditing);
-    ui->toCityLabel->setReadOnly(!isEditing);
-    ui->priceLabel->setReadOnly(!isEditing);
-    ui->fromCityLabel->setFocus();
+    QList<QLineEdit*> ledt = ui->frame->findChildren<QLineEdit*>();
+    foreach(QLineEdit* edt, ledt)
+    {
+        edt->setReadOnly(!isEditing);
+    }
 }
 
 airlineWidget::~airlineWidget()

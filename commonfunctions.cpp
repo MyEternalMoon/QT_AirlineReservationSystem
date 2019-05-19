@@ -66,6 +66,9 @@ bool isTableExistsAndCreateTables()
         QStringList lis = db.tables();
         if (!lis.contains("user"))
         {
+            QSplashScreen *splash = new QSplashScreen();
+            splash->setStyleSheet("border-image:/img_normal/warning.png");
+            splash->show();
             QSqlQuery sq(db);
             QString userSql = "CREATE TABLE airlines(\
                     airport_start VARCHAR2(10), \

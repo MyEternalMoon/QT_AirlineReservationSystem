@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent, string name, std::string url, int arth) 
     //initialize database connection.
     ui->warningLabel->hide();
     initAirlines(false);
-
+    ui->addNewAirlineButton->hide();
 
     initInfomation();
 }
@@ -48,6 +48,7 @@ void MainWindow:: initSignalsAndSlots()
     connect(ui->bookTicketrejectBtn,SIGNAL(clicked(bool)),this,SLOT(ticketRejected()));
     connect(ui->bookTicketAcceptbtn,SIGNAL(clicked(bool)),this,SLOT(bookTicketClicked()));
     connect(ui->headButton,SIGNAL(clicked(bool)),this,SLOT(headClicked()));
+    connect(ui->addNewAirlineButton,SIGNAL(clicked()),this,SLOT(createARow()));
     connect(ui->modeWidget,SIGNAL(currentRowChanged(int)),this,SLOT(switchMode(int)));
 }
 
@@ -90,7 +91,7 @@ void MainWindow::initAirlines(bool editable)
 //                qDebug() << sq.value(0).toString()<< sq.value(1).toString() <<
 //                                                   sq.value(3).toDateTime().time() <<sq.value(4).toDateTime().time()
 //                                                  << sq.value(5).toInt() <<sq.value(2).toString();
-                createARow(sq.value(0).toString(), sq.value(1).toString(),
+                createARow(sq.value(0).toString(), sq.value(1).toString(),sq.value(3).toDate(),sq.value(5).toDate(),
                            sq.value(4).toTime(),sq.value(6).toTime(),
                            sq.value(7).toInt(),sq.value(2).toString(),editable);
             }
@@ -98,15 +99,47 @@ void MainWindow::initAirlines(bool editable)
     }
 }
 
-void MainWindow::createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id, bool editable)
+void MainWindow::initOrders()
 {
+    if (_db.open())
+    {
+        QSqlQuery sq(_db);
+        QString userSql = QString("SELECT * FROM U_A WHERE username='%1'").arg(_name);
+        sq.prepare(userSql);
+        if (sq.exec())
+        {
+            while (sq.next()) {
+                createAOrderRow(_name, sq.value(1).toString(), sq.value(3).toDate(), sq.value(2).toInt());
+            }
+        }
+    }
+}
+
+void MainWindow::createAOrderRow(QString user, QString id, QDate date, int price)
+{
+
     QListWidgetItem* item = new QListWidgetItem;
-    airlineWidget* info = new airlineWidget(this,fromCity,toCity,fromTime,toTime,price,id);
+    orderWidget* order = new orderWidget;
+    order->initInfo(user,id,date,price);
+    item->setSizeHint(QSize(820,80));
+
+    ui->listWidget->addItem(item);
+    ui->listWidget->setItemWidget(item,order);
+}
+
+
+void MainWindow::createARow(QString fromCity, QString toCity, QDate fromDate, QDate toDate, QTime fromTime, QTime toTime, int price, QString id, bool editable, bool isNew)
+{        
+    QListWidgetItem* item = new QListWidgetItem;
+    airlineWidget* info = new airlineWidget(this,fromCity,toCity,fromDate, toDate, fromTime,toTime,price,id);
     item->setSizeHint(QSize(820,80));
     info->hideOrShowEditButton(editable);
 
     ui->listWidget->addItem(item);
-    connect(info,SIGNAL(airlineEidted(QList<QString>)),this,SLOT(airlineEidted(QList<QString>)));
+    if (isNew)
+        connect(info,SIGNAL(airlineEidted(QList<QString>)),this,SLOT(insertNewAirlineToDatabase(QList<QString>)));
+    else
+        connect(info,SIGNAL(airlineEidted(QList<QString>)),this,SLOT(airlineEidted(QList<QString>)));
     ui->listWidget->setItemWidget(item,info);
 
 }
@@ -132,8 +165,8 @@ void MainWindow::bookTicketClicked()
             QSqlQuery sq(_db);
             QString userQuery = "INSERT INTO U_A values(?, ?, ?, ?)";
             sq.prepare(userQuery);
-            sq.addBindValue(currentID);
             sq.addBindValue(currentUser);
+            sq.addBindValue(currentID);
             sq.addBindValue(price);
             sq.addBindValue(QDate::currentDate());
 
@@ -184,7 +217,7 @@ void MainWindow::ticketRejected()
     }
 }
 
-void MainWindow::clearAirlinesWidget()
+void MainWindow::clearListWidgetItems()
 {
     // release all memories of listwidgetItems
     int cnt = ui->listWidget->count();
@@ -286,6 +319,7 @@ bool MainWindow::airlineEidted(QList<QString> values)
 
 void MainWindow::switchMode(int mode)
 {
+    ui->addNewAirlineButton->hide();
     if (mode == _mode)
     {
         return;
@@ -295,17 +329,18 @@ void MainWindow::switchMode(int mode)
     if (mode == 0)
     {
         changeBackgroundStyle(false);
-        clearAirlinesWidget();
+        clearListWidgetItems();
         initAirlines(false);
         connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
     }
     else if (mode == 2)
     {
         changeBackgroundStyle(true);
-        clearAirlinesWidget();
+        clearListWidgetItems();
         ticketRejected();
         disconnect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
         initAirlines(_arth?true:false);
+        ui->addNewAirlineButton->show();
     }
     else if (mode == 1)
     {
@@ -313,12 +348,21 @@ void MainWindow::switchMode(int mode)
         // if manager switches to this mode ,set new QSS to get a new background-image created by AI
         // red-based color with 'Manager'I think fine!
         qDebug() <<"mode1";
+        clearListWidgetItems();
+        ticketRejected();
+        disconnect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(ticketClicked(QListWidgetItem*)));
+        initOrders();
     }
+}
+
+void MainWindow::insertNewAirlineToDatabase(QList<QString> values)
+{
+
 }
 
 MainWindow::~MainWindow()
 {
-    clearAirlinesWidget();
+    clearListWidgetItems();
     delete ui;
 }
 

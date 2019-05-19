@@ -3,7 +3,7 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-
+#include <QSplashScreen>
 #include <QPixmap>
 #include <QPainter>
 #include <QDir>

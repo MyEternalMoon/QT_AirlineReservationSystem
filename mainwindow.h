@@ -13,6 +13,7 @@
 #include "buyticketdialog.h"
 #include "commonfunctions.h"
 #include "airlinewidget.h"
+#include "orderwidget.h"
 #include "airlines.h"
 #include "airlines.h"
 #include <QFileDialog>
@@ -47,8 +48,9 @@ private:
     void initInfomation();
 
     void initAirlines(bool editable);
-    void createARow(QString fromCity, QString toCity, QTime fromTime, QTime toTime, int price, QString id, bool editable);
-    void clearAirlinesWidget();
+    void initOrders();
+    void createAOrderRow(QString user, QString id, QDate date, int price);
+    void clearListWidgetItems();
     void ordersMode();
 
     Ui::MainWindow *ui;
@@ -60,8 +62,13 @@ private slots:
     void bookTicketClicked();
     void headClicked();
     bool airlineEidted(QList<QString> values);
+    void insertNewAirlineToDatabase(QList<QString> values);
     void searchAirlineClicked();
     void switchMode(int);
+
+    void createARow(QString fromCity = "", QString toCity ="",QDate fromDate = QDate(70,1,1),QDate toDate= QDate(70,1,1), QTime fromTime = QTime(00,00),
+                    QTime toTime = QTime(00,00), int price = 0, QString id = "", bool editable = true, bool isNew = false);
+
 
 protected:
     void mousePressEvent(QMouseEvent* event);

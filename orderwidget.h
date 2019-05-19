@@ -14,6 +14,7 @@ class orderWidget : public QWidget
 public:
     explicit orderWidget(QWidget *parent = 0);
     ~orderWidget();
+    void initInfo(QString user, QString id, QDate date, int price);
 
 private:
     Ui::orderWidget *ui;
